@@ -2,6 +2,7 @@ import './App.css'
 
 import { useState } from 'react'
 import Layout from './components/Layout/Layout'
+import SearchBar from './components/SearchBar/SearchBar'
 import TasksList from './components/TaskList/TaskList'
 import { Task } from './types'
 
@@ -43,8 +44,7 @@ function App() {
 
   return (
     <Layout>
-      <label htmlFor="text">Filtrar</label>
-      <input id="text" type="text" onChange={(e) => setFilter(e.target.value)} placeholder="Buscar..." />
+      <SearchBar onSearch={(value: string) => setFilter(value)} />
       <TasksList tasks={todos} filter={filter} />
       <div>Contenido de la aplicación</div>
     </Layout>
