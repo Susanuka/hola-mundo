@@ -5,7 +5,7 @@ import Header from './Header/Header'
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div>
-      <Header title="mi titulo" />
+      <Header title="mi titulo" subtitulo="subtitulo" />
       <main>{children}</main>
       <footer>Pie de página</footer>
     </div>
