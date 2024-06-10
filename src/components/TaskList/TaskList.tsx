@@ -15,6 +15,14 @@ const TasksList: FC<TasksListProps> = ({ tasks, filter }) => {
   return (
     <>
       {/* esto es un nodo "vacio" */}
+      {filter && (
+        <p>
+          {tasksFiltered.length} encontradas, filtrando por la palabra: {filter}
+        </p>
+      )}
+      {/* es mas legible usar la negacion que el or */}
+      {!filter && <p>Sin filtro</p>}
+
       {tasksFiltered.map((task: Task) => (
         <TaskCard key={`task-${task.id}`} task={task} />
       ))}
