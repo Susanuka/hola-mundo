@@ -1,3 +1,5 @@
+import './TaskCard.css'
+
 import { FC } from 'react'
 import { Task } from '../../types'
 
