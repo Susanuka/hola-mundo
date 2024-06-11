@@ -1,8 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent, { UserEvent } from '@testing-library/user-event'
-
-import TaskCard from './TaskCard'
 import { TasksContext } from '../TasksContext/TasksContext'
+import TaskCard from './TaskCard'
 
 describe('TaskCard', () => {
   let user: UserEvent

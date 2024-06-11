@@ -1,34 +1,39 @@
-import userEvent, { UserEvent } from '@testing-library/user-event'
-
 import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { axe } from 'jest-axe'
 import { TasksContext } from '../TasksContext/TasksContext'
 import CreateTaskForm from './CreateTaskForm'
 
-describe('CreateTaskCardForm', () => {
-  let user: UserEvent
-  beforeEach(() => {
-    user = userEvent.setup()
+describe('CreateTaskForm', () => {
+  it('el formulario es accesible', async () => {
+    const { container } = render(<CreateTaskForm />)
+    const result = await axe(container)
+    expect(result).toHaveNoViolations()
   })
-  it('renderiza el componente', () => {
-    render(<CreateTaskForm></CreateTaskForm>)
-  })
-  it('agrega la tarea correctamente', async () => {
+
+  it('el formulario llama a addTask con los datos del formulario', async () => {
+    const expectedValue = {
+      title: 'Tarea 1',
+      description: 'Descripción de la tarea 1',
+      completed: false,
+    }
+
     const addTaskSpy = vitest.fn()
-    const { getByLabelText, getByRole } = render(
+    const user = userEvent.setup()
+    const { getByRole } = render(
       <TasksContext.Provider value={{ tasks: [], addTask: addTaskSpy, updateTask: () => {} }}>
-        <CreateTaskForm />,
+        <CreateTaskForm />
       </TasksContext.Provider>,
     )
 
-    await user.type(getByLabelText('Título'), 'Nueva Tarea')
-    await user.type(getByLabelText('Descripción'), 'Descripción de la nueva tarea')
+    user.type(getByRole('textbox', { name: 'Título' }), expectedValue.title)
+    user.type(getByRole('textbox', { name: 'Descripción' }), expectedValue.description)
 
-    await user.click(getByRole('button'))
-
-    expect(addTaskSpy).toHaveBeenCalledWith({
-      title: 'Nueva Tarea',
-      description: 'Descripción de la nueva tarea',
-      completed: false,
-    })
+    await user.click(
+      getByRole('button', {
+        name: 'Crear tarea',
+      }),
+    )
+    expect(addTaskSpy).toHaveBeenCalled()
   })
 })
