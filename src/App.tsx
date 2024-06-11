@@ -1,41 +1,28 @@
-import './App.css'
-
 import { useState } from 'react'
+import './App.css'
 import Layout from './components/Layout/Layout'
 import SearchBar from './components/SearchBar/SearchBar'
-import TasksList from './components/TaskList/TaskList'
+import TasksLists from './components/TasksList/TasksList'
 import { Task } from './types'
 
-const todos: Task[] = [
+const allTasks: Task[] = [
   {
     id: 1,
-    title: 'Tarea1',
-    description: 'Descripcion',
-    completed: true,
+    title: 'Hacer la compra',
+    description: 'Comprar pan, leche y huevos',
+    completed: false,
   },
   {
     id: 2,
-    title: 'Tarea2',
-    description: 'Descripcion',
+    title: 'Ir al gimnasio',
+    description: 'Hacer una hora de pesas',
     completed: true,
   },
   {
     id: 3,
-    title: 'Tarea3',
-    description: 'Descripcion',
-    completed: true,
-  },
-  {
-    id: 4,
-    title: 'Tarea4',
-    description: 'Descripcion',
-    completed: true,
-  },
-  {
-    id: 5,
-    title: 'Tarea5',
-    description: 'Descripcion',
-    completed: true,
+    title: 'Estudiar inglés',
+    description: 'Repasar los verbos irregulares',
+    completed: false,
   },
 ]
 
@@ -45,8 +32,7 @@ function App() {
   return (
     <Layout>
       <SearchBar onSearch={(value: string) => setFilter(value)} />
-      <TasksList tasks={todos} filter={filter} />
-      <div>Contenido de la aplicación</div>
+      <TasksLists tasks={allTasks} filter={filter} />
     </Layout>
   )
 }

@@ -1,15 +1,13 @@
 import { Task } from '../types'
 
-const filterTasks = (tasks: Task[], filter: string): Task[] => {
-  return filter
-    ? tasks.filter((task) => task.title.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
-    : [...tasks]
+const filterTasks = (tasks: Task[], filter?: string): Task[] => {
+  return filter ? tasks.filter((task) => task.title.includes(filter)) : [...tasks]
 }
 
-const useTaskskUtils = () => {
+const useTaskUtils = () => {
   return {
     filterTasks,
   }
 }
 
-export default useTaskskUtils
+export default useTaskUtils

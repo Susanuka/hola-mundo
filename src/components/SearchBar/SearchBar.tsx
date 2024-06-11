@@ -4,7 +4,7 @@ export interface SearchBarProps {
   onSearch: (value: string) => void
 }
 
-const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: FC<SearchBarProps> = ({ onSearch: onSearchChange }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -13,8 +13,7 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
 
   return (
     <div>
-      <label htmlFor="text">Filtrar</label>
-      <input ref={inputRef} id="text" type="text" onChange={(e) => onSearch(e.target.value)} placeholder="Buscar..." />
+      <input ref={inputRef} type="text" placeholder="buscar" onChange={(e) => onSearchChange(e.target.value)} />
     </div>
   )
 }
