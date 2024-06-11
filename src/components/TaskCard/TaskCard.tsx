@@ -1,22 +1,20 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import { Task } from '../../types'
+import { TasksContext } from '../TasksContext/TasksContext'
 import css from './TaskCard.module.css'
 
 export interface TaskCardProps {
   task: Task
-  onTaskEdited: (value: Task) => void
 }
 
-const TaskCard: FC<TaskCardProps> = ({ task, onTaskEdited }) => {
-  const handleOnClick = () => {
-    task.completed = !task.completed
-    onTaskEdited(task)
-  }
+const TaskCard: FC<TaskCardProps> = ({ task }) => {
+  const { updateTask } = useContext(TasksContext)
+  const handleChange = () => updateTask({ ...task, completed: !task.completed })
 
   return (
     <div className={`${css.card} ${task.completed ? css.completed : css.incomplete}`}>
       <div className={css.check}>
-        <input type="checkbox" checked={task.completed} onClick={handleOnClick} />
+        <input type="checkbox" checked={task.completed} onChange={handleChange} />
       </div>
       <div className={css.info}>
         <div className={css.title}>{task.title}</div>
