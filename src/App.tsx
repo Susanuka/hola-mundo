@@ -41,10 +41,14 @@ function App() {
     setTasks([...tasks, newTask])
   }
 
+  const handleTaskEdited = (task: Task) => {
+    setTasks((prevTasks) => prevTasks.map((item) => (item.id === task.id ? { ...allTasks, ...task } : item)))
+  }
+
   return (
     <Layout>
       <SearchBar onSearch={(value: string) => setFilter(value)} />
-      <TasksLists tasks={tasks} filter={filter} />
+      <TasksLists tasks={tasks} filter={filter} onTaskEdited={handleTaskEdited} />
       <CreateTaskForm onTaskCreated={handleTaskCreated} />
     </Layout>
   )

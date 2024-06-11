@@ -1,6 +1,6 @@
 import { FC, useId } from 'react'
-import { TaskWithoutId } from '../../types'
 
+import { TaskWithoutId } from '../../types'
 import css from './CreateTaskForm.module.css'
 
 export interface CreateTaskFormProps {
@@ -11,10 +11,11 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({ onTaskCreated }) => {
   const id = useId()
 
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(e.currentTarget)
     e.preventDefault()
     const task: TaskWithoutId = {
-      title: e.currentTarget[0].value,
-      description: e.currentTarget[1].value,
+      title: formData.get('title') as string,
+      description: formData.get('description') as string,
       completed: false,
     }
     onTaskCreated(task)
@@ -23,9 +24,9 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({ onTaskCreated }) => {
   return (
     <form className={css.form} onSubmit={handleForm}>
       <label id={`${id}-title`}>Título</label>
-      <input type="text" aria-describedby={`${id}-title`} placeholder="Titulo..."></input>
+      <input type="text" aria-describedby={`${id}-title`} placeholder="Titulo..." name="title"></input>
       <label id={`${id}-description`}>Descripción</label>
-      <textarea aria-describedby={`${id}-description`} placeholder="Descripcion..."></textarea>
+      <textarea aria-describedby={`${id}-description`} placeholder="Descripcion..." name="description"></textarea>
       <button type="submit">Crear tarea</button>
     </form>
   )
