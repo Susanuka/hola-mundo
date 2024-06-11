@@ -1,4 +1,5 @@
 import { FC, useContext, useId } from 'react'
+
 import { TaskWithoutId } from '../../types'
 import { TasksContext } from '../TasksContext/TasksContext'
 import css from './CreateTaskForm.module.css'
@@ -22,10 +23,10 @@ const CreateTaskForm: FC<CreateTaskFormProps> = () => {
 
   return (
     <form className={css.form} onSubmit={handleForm}>
-      <label id={`${id}-title`}>Título</label>
-      <input type="text" aria-describedby={`${id}-title`} name="title" />
-      <label id={`${id}-description`}>Descripción</label>
-      <textarea aria-describedby={`${id}-description`} name="description" />
+      <label htmlFor={`${id}-title`}>Título</label>
+      <input id={`${id}-title`} type="text" aria-describedby={`${id}-title`} name="title" />
+      <label htmlFor={`${id}-description`}>Descripción</label>
+      <textarea id={`${id}-description`} aria-describedby={`${id}-description`} name="description" />
       <button type="submit">Crear tarea</button>
     </form>
   )
