@@ -1,8 +1,8 @@
 import './App.css'
 
+import { useReducer, useState } from 'react'
 import { Task, TaskWithoutId } from './types'
 
-import { useState } from 'react'
 import CreateTaskForm from './components/CreateTaskForm/CreateTaskForm'
 import Layout from './components/Layout/Layout'
 import SearchBar from './components/SearchBar/SearchBar'
@@ -29,20 +29,40 @@ const allTasks: Task[] = [
   },
 ]
 
+enum TaskAction {
+  'CREATE',
+  'UPDATE',
+}
+
+interface TaskReducerAction {
+  command: TaskAction
+  task: Task | TaskWithoutId
+}
+
 function App() {
   const [filter, setFilter] = useState('')
-  const [tasks, setTasks] = useState(allTasks)
+
+  const taskReducer = (state: Task[], action: TaskReducerAction): Task[] => {
+    switch (action.command) {
+      case TaskAction.CREATE:
+        return [...state, { ...action.task, id: state.length + 1, completed: false }]
+      case TaskAction.UPDATE:
+        return state.map((task) =>
+          task.id === (action.task as Task).id ? { ...task, ...(action.task as Task) } : task,
+        )
+      default:
+        return state
+    }
+  }
+
+  const [tasks, dispatch] = useReducer(taskReducer, allTasks)
 
   const handleTaskCreated = (task: TaskWithoutId) => {
-    const newTask: Task = {
-      id: tasks.length + 1,
-      ...task,
-    }
-    setTasks([...tasks, newTask])
+    dispatch({ command: TaskAction.CREATE, task })
   }
 
   const handleTaskEdited = (task: Task) => {
-    setTasks((prevTasks) => prevTasks.map((item) => (item.id === task.id ? { ...allTasks, ...task } : item)))
+    dispatch({ command: TaskAction.UPDATE, task })
   }
 
   return (
